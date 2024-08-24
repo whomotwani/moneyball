@@ -6,4 +6,6 @@
 defineOptions({
   name: 'App'
 });
+
+// window.addEventListener('contextmenu', e => e.preventDefault())
 </script>
