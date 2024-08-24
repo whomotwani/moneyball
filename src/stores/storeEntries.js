@@ -9,21 +9,25 @@ export const useStoreEntries = defineStore("entries", () => {
       id: "id0",
       name: "Salary",
       amount: 8000000,
+      paid: false,
     },
     {
       id: "id1",
       name: "EMI",
       amount: -5000000,
+      paid: false,
     },
     {
       id: "id2",
       name: "iPhone",
       amount: -200000,
+      paid: false,
     },
     {
       id: "id3",
       name: "Unknown",
       amount: 299,
+      paid: false,
     },
   ]);
 
@@ -34,9 +38,18 @@ export const useStoreEntries = defineStore("entries", () => {
     }, 0);
   });
 
+  const paidBalance = computed(() => {
+    return entries.value.reduce((acc, { amount, paid }) => {
+      return paid ? acc + amount : acc;
+    }, 0);
+  });
+
   //- Actions
   const addEntry = (addEntryForm) => {
-    const newEntry = Object.assign({}, addEntryForm, { id: uid() });
+    const newEntry = Object.assign({}, addEntryForm, {
+      id: uid(),
+      paid: false,
+    });
     entries.value.push(newEntry);
   };
 
@@ -67,6 +80,7 @@ export const useStoreEntries = defineStore("entries", () => {
 
     // getters
     balance,
+    paidBalance,
 
     // actions
     addEntry,

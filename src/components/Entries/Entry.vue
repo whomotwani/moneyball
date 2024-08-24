@@ -1,10 +1,14 @@
 <template>
-    <q-slide-item @right="onEntrySlideLeft" left-color="positive" right-color="negative">
+    <q-slide-item @right="onEntrySlideRight" @left="onEntrySlideLeft" left-color="positive" right-color="negative"
+        :class="{ 'bg-grey-2': entry.paid }">
+        <template v-slot:left>
+            <q-icon name="done" />
+        </template>
         <template v-slot:right>
             <q-icon name="delete" />
         </template>
         <q-item class="text-weight-bold">
-            <q-item-section :class="useAmountColor(entry.amount)">
+            <q-item-section :class="[useAmountColor(entry.amount), { 'text-strike': entry.paid }]">
                 <q-item-label>
                     {{ entry.name }}
                     <q-popup-edit :model-value="entry.name" auto-save v-slot="scope" anchor="top left"
@@ -14,7 +18,7 @@
                     </q-popup-edit>
                 </q-item-label>
             </q-item-section>
-            <q-item-section side :class="useAmountColor(entry.amount)">
+            <q-item-section side :class="[useAmountColor(entry.amount), { 'text-strike': entry.paid }]">
                 {{ useCurrencify(entry.amount) }}
                 <q-popup-edit :model-value="entry.amount" auto-save v-slot="scope" anchor="top left" :offset="[24, 16]"
                     cover="false" buttons label-set="ok" @save="onAmountUpdate">
@@ -50,7 +54,7 @@ const props = defineProps({
 });
 
 // slide items
-const onEntrySlideLeft = ({ reset }) => {
+const onEntrySlideRight = ({ reset }) => {
     $q.dialog({
         title: 'Delete entry',
         message: `
@@ -76,6 +80,11 @@ const onEntrySlideLeft = ({ reset }) => {
     }).onCancel(() => {
         reset()
     })
+}
+
+const onEntrySlideLeft = ({ reset }) => {
+    storeEntries.updateEntry(props.entry.id, { paid: !props.entry.paid })
+    reset()
 }
 
 const onNameUpdate = value => {
