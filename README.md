@@ -1,6 +1,6 @@
 # Moneyballs (moneyballs)
 
-A Quasar Project
+An expense tracker webapp.
 
 ## Install the dependencies
 ```bash
