@@ -1,6 +1,9 @@
 # Moneyballs (moneyballs)
 
-An expense tracker webapp.
+An expense tracker web and desktop app.
+
+Moneyballs is a multi-platform app built to manage expenses.
+It is built using Vue 2 and Quasar framework.
 
 ## Install the dependencies
 ```bash
@@ -12,12 +15,22 @@ npm install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
 quasar dev
+# to launch desktop app in development,
+quasar dev -m electron
 ```
 
 
 ### Build the app for production
 ```bash
 quasar build
+```
+
+### Build the desktop app for production
+```bash
+# for mac
+quasar build -m electron
+# for windows
+quasar build -m electron --target win32
 ```
 
 ### Customize the configuration
