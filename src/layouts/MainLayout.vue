@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR lFf">
-    <q-header elevated>
+    <q-header :elevated="useLightOrDark(true, false)">
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
@@ -11,7 +11,8 @@
           </div>
         </q-toolbar-title>
 
-        <q-btn v-if="$route.fullPath == '/'" :label="storeEntries.options.sort ? 'Done' : 'Sort'" flat no-caps dense @click="storeEntries.options.sort = !storeEntries.options.sort" />
+        <q-btn v-if="$route.fullPath == '/'" :label="storeEntries.options.sort ? 'Done' : 'Sort'" flat no-caps dense
+          @click="storeEntries.options.sort = !storeEntries.options.sort" />
 
       </q-toolbar>
     </q-header>
@@ -38,6 +39,7 @@ import NavLink from 'components/nav/NavLink.vue'
 
 // import stores
 import { useStoreEntries } from 'src/stores/storeEntries'
+import { useLightOrDark } from 'src/use/useLightOrDark'
 
 defineOptions({
   name: 'MainLayout'

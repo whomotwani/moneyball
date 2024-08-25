@@ -1,5 +1,5 @@
 <template>
-    <div class="row text-grey-7 q-px-md q-py-sm shadow-up-3 q-mb-sm items-center">
+    <div class="row text-grey-7 q-px-md q-py-sm q-mb-sm items-center" :class="useLightOrDark('shadow-up-3', 'bg-black')">
         <div class="col text-h6">
             Balance
         </div>
@@ -26,6 +26,7 @@
 import { useCurrencify } from 'src/use/useCurrencify'
 import { useAmountColor } from 'src/use/useAmountColor'
 import { useStoreEntries } from 'src/stores/storeEntries'
+import { useLightOrDark } from 'src/use/useLightOrDark'
 
 const storeEntries = useStoreEntries();
 

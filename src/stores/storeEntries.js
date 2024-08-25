@@ -1,35 +1,10 @@
 import { defineStore } from "pinia";
-import { ref, computed, reactive } from "vue";
-import { uid, Notify } from "quasar";
+import { ref, computed, reactive, watch, nextTick } from "vue";
+import { uid, Notify, LocalStorage } from "quasar";
 
 export const useStoreEntries = defineStore("entries", () => {
   //- States
-  const entries = ref([
-    {
-      id: "id0",
-      name: "Salary",
-      amount: 500,
-      paid: false,
-    },
-    {
-      id: "id1",
-      name: "EMI",
-      amount: -50,
-      paid: false,
-    },
-    {
-      id: "id2",
-      name: "iPhone",
-      amount: -20,
-      paid: false,
-    },
-    {
-      id: "id3",
-      name: "Unknown",
-      amount: 0,
-      paid: false,
-    },
-  ]);
+  const entries = ref([]);
 
   const options = reactive({
     sort: false,
@@ -75,6 +50,7 @@ export const useStoreEntries = defineStore("entries", () => {
   function deleteEntry(entryId) {
     const index = getEntryIndexId(entryId);
     entries.value.splice(index, 1);
+    removeSlideItemIfExists(entryId);
     Notify.create({
       message: "Entry deleted",
       position: "top",
@@ -93,7 +69,29 @@ export const useStoreEntries = defineStore("entries", () => {
     entries.value.splice(newIndex, 0, movedEntry);
   };
 
+  const saveEntries = () => {
+    LocalStorage.setItem("entries", entries.value);
+  };
+
+  const loadEntries = () => {
+    const savedEntries = LocalStorage.getItem("entries");
+    if (savedEntries) Object.assign(entries.value, savedEntries);
+  };
+
+  // watchers
+  watch(entries.value, () => {
+    saveEntries();
+  });
+
   //- helpers
+  const removeSlideItemIfExists = (entryId) => {
+    // hacky fix
+    nextTick(() => {
+      const slideItem = document.querySelector(`#id-${entryId}`);
+      if (slideItem) slideItem.remove();
+    });
+  };
+
   const getEntryIndexId = (entryId) => {
     return entries.value.findIndex((entry) => entry.id === entryId);
   };
@@ -113,5 +111,6 @@ export const useStoreEntries = defineStore("entries", () => {
     deleteEntry,
     updateEntry,
     sortEnd,
+    loadEntries,
   };
 });

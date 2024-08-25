@@ -1,6 +1,7 @@
 <template>
     <q-slide-item @right="onEntrySlideRight" @left="onEntrySlideLeft" left-color="positive" right-color="negative"
-        :class="{ 'bg-grey-2': entry.paid }">
+        :class="[entry.paid ? useLightOrDark('bg-grey-2', 'bg-grey-9') : '']"
+        :id="`id-${entry.id}`">
         <template v-slot:left>
             <q-icon name="done" />
         </template>
@@ -48,6 +49,7 @@ import { useStoreSettings } from 'src/stores/storeSettings';
 // composibles
 import { useCurrencify } from 'src/use/useCurrencify'
 import { useAmountColor } from 'src/use/useAmountColor'
+import { useLightOrDark } from 'src/use/useLightOrDark'
 
 import vSelectAll from 'src/directives/directiveSelectAll'
 
@@ -56,7 +58,6 @@ const $q = useQuasar()
 // stores
 const storeEntries = useStoreEntries();
 const storeSettings = useStoreSettings();
-
 
 // props
 const props = defineProps({

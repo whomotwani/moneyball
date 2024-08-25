@@ -8,6 +8,17 @@
     }
 }
 
+// dark overrides
+.body--dark {
+    .bg-primary,
+    .q-layout__section--marginal {
+        background-color: $primary-dark !important;
+    }
+    .q-drawer {
+        border: none;
+    }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     margin-left: 10px;

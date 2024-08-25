@@ -2,11 +2,11 @@
     <q-form @submit="addEntryFormSubmit" class="row q-px-sm q-pb-sm q-gutter-sm bg-primary">
         <div class="col">
             <q-input v-select-all ref="nameField" v-model="addEntryForm.name" outlined placeholder="Name"
-                bg-color="white" dense />
+                :bg-color="useLightOrDark('white', 'black')" dense />
         </div>
         <div class="col">
             <q-input v-select-all v-model.number="addEntryForm.amount" type="number" step="0.01" outlined
-                input-class="text-right" placeholder="Amount" bg-color="white" dense />
+                input-class="text-right" placeholder="Amount" :bg-color="useLightOrDark('white', 'black')" dense />
         </div>
         <div class="col col-auto">
             <q-btn round color="primary" icon="add" type="submit" />
@@ -18,6 +18,8 @@
 import { ref, reactive } from 'vue';
 import { useStoreEntries } from 'src/stores/storeEntries'
 import vSelectAll from 'src/directives/directiveSelectAll'
+import { useLightOrDark } from 'src/use/useLightOrDark'
+
 
 const storeEntries = useStoreEntries();
 
@@ -37,7 +39,9 @@ const resetAddEntryForm = () => {
 }
 
 const addEntryFormSubmit = () => {
-    storeEntries.addEntry(addEntryForm);
-    resetAddEntryForm();
+    if (addEntryForm.name) {
+        storeEntries.addEntry(addEntryForm);
+        resetAddEntryForm();
+    }
 }
 </script>
