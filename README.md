@@ -3,7 +3,7 @@
 An expense tracker web and desktop app.
 
 Moneyballs is a multi-platform app built to manage expenses.
-It is built using Vue 2 and Quasar framework.
+It is built using Vue 3 and Quasar framework with Pinia as the state management library.
 
 ## Install the dependencies
 ```bash
