@@ -24,6 +24,16 @@
         </q-item-label>
 
         <NavLink v-for="link in navLinks" :key="link.title" v-bind="link" />
+
+        <q-item clickable tag="a" class="text-white absolute-bottom" v-if="$q.platform.is.electron" @click="quitApp">
+          <q-item-section avatar>
+            <q-icon name="power_settings_new" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Quit</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -35,6 +45,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
+
 import NavLink from 'components/nav/NavLink.vue'
 
 // import stores
@@ -45,6 +57,7 @@ defineOptions({
   name: 'MainLayout'
 })
 
+const $q = useQuasar();
 // stores
 const storeEntries = useStoreEntries();
 
@@ -65,5 +78,30 @@ const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
+}
+function quitApp() {
+  console.log('Quitting app');
+
+  $q.dialog({
+    title: 'Quit app',
+    message: `Do you want to quit Moneyballs?`,
+    cancel: true,
+    persistent: true,
+    html: true,
+    ok: {
+      label: 'Quit',
+      color: 'negative',
+      noCaps: true
+    },
+    cancel: {
+      color: 'primary',
+      noCaps: true
+    }
+  }).onOk(() => {
+    if($q.platform.is.electron) {
+      ipcRenderer.send('quit-app')
+    }
+  })
+
 }
 </script>
