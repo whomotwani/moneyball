@@ -9,6 +9,8 @@
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "dev:win": "quasar dev -m electron",
+    "build:mac": "quasar build -m electron",
+    "build:win": "quasar build -m electron --target win32",
     "build": "quasar build"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
+    "@electron/packager": "^18.3.4",
     "@quasar/app-vite": "^1.9.0",
     "autoprefixer": "^10.4.2",
     "electron": "^32.0.1",
