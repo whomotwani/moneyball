@@ -8,13 +8,16 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
+    "dev:android": "quasar dev -m capacitor -T android",
     "dev:win": "quasar dev -m electron",
     "build:mac": "quasar build -m electron",
     "build:win": "quasar build -m electron --target win32",
-    "build": "quasar build"
+    "build": "quasar build",
+    "build:android": "quasar build -m capacitor -T android --ide"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "@quasar/icongenie": "^4.0.0",
     "pinia": "^2.0.11",
     "quasar": "^2.16.0",
     "sortablejs": "^1.15.2",
